@@ -116,9 +116,8 @@ class TicTacToeView : View {
 
                 }
                 if(TicTacToeModel.endGame() == true){
-                    snack("A játék véget ért",10000)
-                    sleep(1000)
-                    TicTacToeModel.resetModel()
+                    snack("A játék véget ért",1000)
+                    Handler().postDelayed({TicTacToeModel.resetModel()},1)
                 }
                 return true
             }
