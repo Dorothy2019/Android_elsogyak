@@ -4,10 +4,15 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Handler
+import android.os.SystemClock.sleep
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.google.android.material.snackbar.Snackbar
 import hu.bme.aut.android.tictactoe.model.TicTacToeModel
+
+
 import kotlin.math.min
 
 class TicTacToeView : View {
@@ -96,6 +101,9 @@ class TicTacToeView : View {
 
         setMeasuredDimension(d, d)
     }
+    fun snack(message: String, duration: Int = Snackbar.LENGTH_LONG){
+        Snackbar.make(this,message,duration).show()
+    }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         when (event?.action) {
@@ -105,10 +113,18 @@ class TicTacToeView : View {
                 if (tX < 3 && tY < 3 && TicTacToeModel.getFieldContent(tX, tY) == TicTacToeModel.EMPTY) {
                     TicTacToeModel.setFieldContent(tX, tY, TicTacToeModel.nextPlayer)
                     invalidate()
+
+                }
+                if(TicTacToeModel.endGame() == true){
+                    snack("A játék véget ért",10000)
+                    sleep(1000)
+                    TicTacToeModel.resetModel()
                 }
                 return true
             }
             else -> return super.onTouchEvent(event)
         }
     }
+
+
 }

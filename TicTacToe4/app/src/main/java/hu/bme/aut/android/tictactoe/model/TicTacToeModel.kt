@@ -1,5 +1,7 @@
 package hu.bme.aut.android.tictactoe.model
 
+import java.lang.Boolean.TRUE
+
 object TicTacToeModel {
 
     const val EMPTY: Byte = 0
@@ -35,6 +37,46 @@ object TicTacToeModel {
         changeNextPlayer()
         model[x][y] = content
         return content
+    }
+
+    fun endGame():Boolean {
+        var winner: Boolean = false
+
+        if(model.isNotEmpty() && winner != true) {
+            // sor ellenőrzése
+            for (i in 0 until 3 ) {
+                if(winner == true)
+                    break
+                if(model[i][0] == model[i][1] && 1.toByte() == model[i][2])
+                    winner = true
+                if(model[i][0] == model[i][1] && 2.toByte() == model[i][2])
+                    winner = true
+
+            }
+            // oszlop ellenőrzése
+            for (j in 0 until 3) {
+                if(winner==true)
+                    break
+                if(model[0][j] == model[1][j] && 1.toByte() == model[2][j])
+                    winner= true
+                if(model[0][j] == model[1][j] && 2.toByte() == model[2][j])
+                    winner= true
+            }
+            // a két átlós irány ellenőrzése
+            if (model[0][0] == model[1][1] && 1.toByte()  == model[2][2]) {
+                winner = true
+            }
+            if (model[0][0] == model[1][1] && 2.toByte()  == model[2][2]) {
+                winner = true
+            }
+            if (model[0][2] == model[1][1] && 1.toByte() == model[2][0]) {
+                winner = true
+            }
+            if (model[0][2] == model[1][1] && 2.toByte() == model[2][0]) {
+                winner = true
+            }
+        }
+        return winner
     }
 
 }
